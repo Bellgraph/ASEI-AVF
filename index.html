@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Panel</title>
+
+  <!-- FontAwesome — bundle locally for production deployments without internet access -->
+  <link rel="stylesheet" href="css/fonts/css/all.min.css">
+
+  <!-- Design tokens — always first -->
+  <link rel="stylesheet" href="css/variables.css">
+  <!-- Structural skeleton -->
+  <link rel="stylesheet" href="css/layout.css">
+  <!-- All component styles -->
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div id="panel-root">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HEADER
+       Time and date are pushed from processor via serial joins.
+       Area label row houses the dropdown trigger.
+  ════════════════════════════════════════════════════════════════════════ -->
+  <header id="panel-header">
+
+    <div class="header-top-row">
+      <h1 id="header-time" class="header-time">--:-- --</h1>
+      <h1 id="header-date" class="header-date">--- -- ----</h1>
+    </div>
+
+    <div class="header-area-row">
+      <button id="area-toggle-btn" class="area-toggle-btn" aria-expanded="false" aria-controls="area-dropdown">
+        <i class="fa-solid fa-chevron-down chevron"></i>
+        <span id="area-label-text">[Area Label - Area Info]</span>
+      </button>
+    </div>
+
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MAIN CONTENT — scroll-snap sections
+       Add new <section class="panel-section"> blocks for additional pages.
+       The page-flip button advances through them in DOM order.
+  ════════════════════════════════════════════════════════════════════════ -->
+  <main id="panel-main">
+
+    <!-- Section 1: Present a Source -->
+    <section class="panel-section" id="section-present">
+
+      <h2 id="preset-section-title" class="panel-section__title">Present a Source</h2>
+
+      <!-- Horizontal list of preset slots — built by PresetsUI.init() -->
+      <div id="preset-list" class="preset-list"></div>
+
+    </section>
+
+    <!-- Section 2 placeholder — routing matrix, future -->
+    <!-- <section class="panel-section" id="section-routing"> ... </section> -->
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FOOTER — bottom button bar
+       Left: up to 4 dynamic icon buttons
+       Center: page flip
+       Right: volume controls
+  ════════════════════════════════════════════════════════════════════════ -->
+  <footer id="panel-footer">
+
+    <!-- Left group — mic mute, phone mute, camera mute (or whatever SIMPL assigns) -->
+    <div class="footer-group">
+      <button class="bottom-btn is-hidden" data-left-btn="0" aria-label="Button 1"><i class="fa-solid fa-microphone-slash"></i></button>
+      <button class="bottom-btn is-hidden" data-left-btn="1" aria-label="Button 2"><i class="fa-solid fa-phone-slash"></i></button>
+      <button class="bottom-btn is-hidden" data-left-btn="2" aria-label="Button 3"><i class="fa-solid fa-video-slash"></i></button>
+      <button class="bottom-btn is-hidden" data-left-btn="3" aria-label="Button 4"><i class="fa-solid fa-circle-question"></i></button>
+    </div>
+
+    <!-- Center — page flip -->
+    <div class="footer-group">
+      <button id="pageflip-btn" class="pageflip-btn is-hidden" aria-label="Next page">
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+    </div>
+
+    <!-- Right — volume -->
+    <div class="footer-group">
+      <button class="bottom-btn is-hidden" data-vol="mute"  aria-label="Mute"><i class="fa-solid fa-volume-xmark"></i></button>
+      <button class="bottom-btn is-hidden" data-vol="down"  aria-label="Volume down"><i class="fa-solid fa-volume-low"></i></button>
+      <button class="bottom-btn is-hidden" data-vol="up"    aria-label="Volume up"><i class="fa-solid fa-volume-high"></i></button>
+    </div>
+
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       OVERLAY LAYER
+       All popups and dropdowns mount here. Controls-popup and area-dropdown
+       are built by their respective init() calls. Volume widget is static HTML.
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div id="overlay-layer">
+
+    <!-- Area selection dropdown — static HTML, JS binds it -->
+    <div id="area-dropdown" class="overlay-dropdown area-dropdown" role="listbox" aria-label="Area selection">
+
+      <div class="area-dropdown__list">
+        <!-- Area slot items built by AreaSelectUI.init() -->
+      </div>
+
+      <div class="area-dropdown__footer is-hidden">
+        <span class="area-dropdown__sensor-label" id="partition-sensor-label">[Partition Sensor]</span>
+        <div class="area-dropdown__footer-right">
+          <label class="toggle-switch" aria-label="Partition sensor">
+            <input type="checkbox">
+            <span class="toggle-track"></span>
+          </label>
+          <button class="info-btn" aria-label="Partition sensor info">
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controls popup built entirely by ControlsPopupUI.init() -->
+    <!-- Volume widget — static HTML, JS drives .is-visible -->
+    <div id="volume-widget" class="volume-widget" aria-live="polite">
+      <span class="volume-pct-label">0%</span>
+      <div class="volume-bar-track">
+        <div class="volume-bar-fill"></div>
+      </div>
+    </div>
+
+  </div><!-- /overlay-layer -->
+
+</div><!-- /panel-root -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     SCRIPTS — deferred so DOM is ready before any init() runs
+     Load order matters: Joins and Bridge must be first.
+     CrComLib is loaded by the CH5 runtime before these in production.
+════════════════════════════════════════════════════════════════════════════ -->
+<script src="js/joins.js"          defer></script>
+<script src="js/bridge.js"         defer></script>
+<script src="js/ui/presets.js"     defer></script>
+<script src="js/ui/controls-popup.js" defer></script>
+<script src="js/ui/area-volume.js" defer></script>
+<script src="js/main.js"           defer></script>
+
+</body>
+</html>
