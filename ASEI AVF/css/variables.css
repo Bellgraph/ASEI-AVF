@@ -1,0 +1,160 @@
+/* =============================================================================
+   VARIABLES.CSS — Design Token System
+   One file to rule them all. Every size, color, and spacing value in the
+   project traces back to here. To retheme or rescale the entire panel,
+   edit this file only.
+   =============================================================================
+
+   TYPOGRAPHY SCALE
+   clamp(min, preferred, max) — preferred is viewport-relative so the panel
+   reads correctly on a 7" TSW, a UC-Engine at 1080p, and an iPad in one shot.
+   Never write a pixel font size outside this file.
+
+   h1 → --text-2xl  (time/date display)
+   h2 → --text-xl   (section title, e.g. "Present a Source")
+   h3 → --text-lg   (popup title, area label)
+   h4 → --text-md   (preset label, button label)
+   h5 → --text-base (secondary label, stop/controls text)
+   h6 → --text-sm   (captions, status text)
+   small → --text-xs
+   ============================================================================= */
+
+   @font-face {
+   font-family: 'Rubik';
+   src: url('fonts/webfonts/Rubik-Light.ttf') format('truetype');
+   font-weight: 300;
+   }
+   @font-face {
+   font-family: 'Rubik';
+   src: url('fonts/webfonts/Rubik-Regular.ttf') format('truetype');
+   font-weight: 400;
+   }
+   @font-face {
+   font-family: 'Rubik';
+   src: url('fonts/webfonts/Rubik-Medium.ttf') format('truetype');
+   font-weight: 500;
+   }
+   @font-face {
+   font-family: 'Rubik';
+   src: url('fonts/webfonts/Rubik-Bold.ttf') format('truetype');
+   font-weight: 700;
+   }
+
+:root {
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  --text-xs:   clamp(0.55rem,  1.1vw,  0.7rem);
+  --text-sm:   clamp(0.7rem,   1.4vw,  0.875rem);
+  --text-base: clamp(0.8rem,   1.6vw,  1rem);
+  --text-md:   clamp(0.9rem,   1.8vw,  1.125rem);
+  --text-lg:   clamp(1rem,     2.2vw,  1.375rem);
+  --text-xl:   clamp(1.25rem,  2.6vw,  1.75rem);
+  --text-2xl:  clamp(1.5rem,   3vw,    2rem);
+
+  --font-family: 'Rubik', system-ui, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold:   700;
+
+
+  /* ── Color Palette ──────────────────────────────────────────────────────── */
+  /* Backgrounds */
+  --color-bg:         #e5e5e5;   /* panel root background */
+  --color-surface:    #eeeeee;   /* card/list backgrounds */
+  --color-surface-2:  #f8f8f8;   /* popup background, elevated surface */
+  --color-overlay:    rgba(0, 0, 0, 0.35);  /* scrim behind popups */
+
+  /* Borders */
+  --color-border:       #d0d0d0;
+  --color-border-focus: #5a5fc8;
+
+  /* Text */
+  --color-text-primary:   #1c1c1e;
+  --color-text-secondary: #48484a;
+  --color-text-muted:     #8e8e93;
+  --color-text-inverse:   #ffffff;
+  --color-text-disabled:  #aeaeb2;
+
+  /* Brand / Accent */
+  --color-accent:       #5a5fc8;   /* primary interactive color */
+  --color-accent-dark:  #4148b0;
+  --color-accent-light: rgba(90, 95, 200, 0.12);
+
+  /* Semantic */
+  --color-stop:         #a30000;   /* stop button icon color */
+  --color-stop-bg:      #8b0000;   /* stop button pressed state */
+  --color-combine:      #6b7a00;   /* olive - active/selected combine */
+  --color-active:       #1a9c52;   /* green - call active, partition on */
+  --color-warning:      #c07800;
+
+  /* Preset color dot buttons */
+  --color-prst-a: #b71c1c;  /* red */
+  --color-prst-b: #2e7d32;  /* green */
+  --color-prst-c: #c6a800;  /* yellow */
+  --color-prst-d: #1565c0;  /* blue */
+
+
+  /* ── Spacing Scale ──────────────────────────────────────────────────────── */
+  /* em-based so it scales with font size changes automatically */
+  --space-2xs: 0.2em;
+  --space-xs:  0.35em;
+  --space-sm:  0.5em;
+  --space-md:  0.75em;
+  --space-lg:  1em;
+  --space-xl:  2em;
+  --space-2xl: 4em;
+  --space-3xl: 6em;
+
+
+  /* ── Touch Target Sizes ─────────────────────────────────────────────────── */
+  /* WCAG / Crestron best practice: minimum 44px equivalent touch target.
+     At 16px base that's 2.75em. We always meet or exceed this. */
+  --touch-min:  2.75em;   /* 44px equivalent — absolute floor */
+  --touch-sm:   3em;      /* small buttons, icon-only */
+  --touch-md:   3.5em;    /* standard button */
+  --touch-lg:   4.5em;    /* primary action buttons */
+  --touch-xl:   5.5em;    /* large preset main buttons */
+
+
+  /* ── Border Radius ──────────────────────────────────────────────────────── */
+  --radius-sm:   0.4em 0.4em 0em 0em;
+  --radius-md:   0.625em;
+  --radius-lg:   1em;
+  --radius-xl:   1.5em;
+  --radius-full: 9999px;
+
+
+  /* ── Shadows ────────────────────────────────────────────────────────────── */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.08);
+  --shadow-lg:  0 8px 28px rgba(0,0,0,0.2),  0 4px 8px rgba(0,0,0,0.1);
+  --shadow-popup: 0 12px 40px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.12);
+
+
+  /* ── Transitions ────────────────────────────────────────────────────────── */
+  --transition-fast:   120ms ease;
+  --transition-normal: 220ms ease;
+  --transition-slow:   380ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-popup:  300ms cubic-bezier(0.34, 1.08, 0.64, 1);  /* slight spring */
+
+
+  /* ── Layout ─────────────────────────────────────────────────────────────── */
+  --header-height:      3.25em;
+  --area-row-height:    2.75em;
+  --footer-height:      3.5em;
+  --section-padding:    var(--space-lg);
+
+  /* Controls popup */
+  --popup-width:        clamp(17em, 38vw, 26em);
+  --popup-max-height:   88vh;
+  --popup-inner-pad:    var(--space-lg);
+
+  /* Volume bar */
+  --volume-bar-height:  1.75em;
+  --volume-bar-width:   clamp(8em, 18vw, 14em);
+
+  /* Preset list */
+  --preset-slot-width:  clamp(5em, 10vw, 7.5em);
+  --preset-gap:         var(--space-md);
+
+}
